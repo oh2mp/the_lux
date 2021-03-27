@@ -2,7 +2,7 @@
 
 _An ESP8266 based WiFi configurable RGB LED strip driver_
 
-![MIL light](img/20210327_200258.jpg)
+![MIL light](img/20210327_200221.jpg)
 
 _This circuit and program can be used for driving any common anode RGB led strip or even a single RGB led
 without the transistors. Here I just explain what I built and coded._
