@@ -21,10 +21,12 @@ put it in the light and make an ESP2866 driver for it. The strip was consuming a
 driven as all colors in full intensity. I had to use transistors because the ESP8266 would not be able
 to handle those currents. The measured current was about 780 mA after I made the helix.
 
-The schematic. In addition to that I used a step down DC-DC converter to get 3.3V from the 12V
-power  for the ESP2866. 
+The schematic. In addition to that I used a step down DC-DC converter to get 3.3V for the ESP8266 from the 12V
+power that feeds the LED strip too.
 
 ![The schematic](img/the_lux_schema.jpg)
+
+
 
 
 
