@@ -21,10 +21,24 @@ put it in the light and make an ESP2866 driver for it. The strip was consuming a
 driven as all colors in full intensity. I had to use transistors because the ESP8266 would not be able
 to handle those currents. The measured current was about 780 mA after I made the helix.
 
-The schematic. In addition to that I used a step down DC-DC converter to get 3.3V for the ESP8266 from the 12V
+## The schematic
+In addition to that I used a step down DC-DC converter to get 3.3V for the ESP8266 from the 12V
 power that feeds the LED strip too.
 
 ![The schematic](img/the_lux_schema.jpg)
+
+## Setting up the code
+
+You must have:
+
+- [Arduino IDE](https://www.arduino.cc/en/main/software)
+- [Arduino ESP8266 filesystem uploader](https://github.com/esp8266/arduino-esp8266fs-plugin)
+
+You must also install __Ticker__ and __ESP8266WebServer__ from Arduino library manager if you don't
+already have them.
+
+Use the filesystem uploader tool to upload the contents of data library. It contains the html pages for
+the configuring portal. Then upload the code and you're ready to go.
 
 ## The portal
 
