@@ -42,7 +42,7 @@ the configuring portal. Then upload the code and you're ready to go.
 
 ## The portal
 
-All settings like mode of behavior can be controlled via WiFi. Just connect to WiFi AP "THE LUX" and
+All settings like mode of behavior can be controlled via WiFi. Just connect to WiFi AP __THE LUX__ and
 take your browser to `http://192.168.4.1`
 
 See [Portal.md](Portal.md) for more screenshots and explanations of the modes.
