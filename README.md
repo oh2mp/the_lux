@@ -33,7 +33,7 @@ take your browser to `http://192.168.4.1`
 
 See [Portal.md](Portal.md) for more screenshots.
 
-![Portal frontpage](ui/ui/20210327_170023.jpg)
+![Portal frontpage](ui/20210327_170023.jpg)
 
 See also [THE_LUX.md](THE_LUX.md) for more photos of building my light and it in action.
 
