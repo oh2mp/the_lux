@@ -26,7 +26,16 @@ power that feeds the LED strip too.
 
 ![The schematic](img/the_lux_schema.jpg)
 
+## The portal
 
+All settings like mode of behavior can be controlled via WiFi. Just connect to WiFi AP "THE LUX" and
+take your browser to `http://192.168.4.1`
 
+See [Portal.md](Portal.md) for more screenshots.
 
+![Portal frontpage](ui/ui/20210327_170023.jpg)
+
+See also [THE_LUX.md](THE_LUX.md) for more photos of building my light and it in action.
+
+_Have fun!_
 
