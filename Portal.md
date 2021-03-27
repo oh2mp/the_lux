@@ -1,6 +1,6 @@
 # The Portal
 
-The UI is hopefully well optimized for mobile browsers. I am not a web developer but a Unix administrtor, so...
+The UI is hopefully well optimized for mobile browsers. I am not a web developer but a Unix administrator, so...
 
 Connect to WiFi **THE LUX** and and take your browser to `http://192.168.4.1`
 
