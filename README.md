@@ -1,6 +1,6 @@
 # The LUX
 
-_ESP8266 based WiFi configurable RGB LED strip driver_
+_An ESP8266 based WiFi configurable RGB LED strip driver_
 
 ![MIL light](img/20210327_200258.jpg)
 
