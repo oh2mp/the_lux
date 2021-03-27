@@ -9,10 +9,11 @@ without the transistors. Here I just explain what I built and coded._
 
 ## Background and solution
 
-I got "semi-accidentally" an old military aviation light that had been used as a runway light when a temporary 
-airport is made eg. on a highway. It had a 12V halogen lamp driven by a ring core transformer that was casted 
-in epoxy and fed by some weird 400V 2 phase AC connector. Of course I couldn't use it as it was. It was 
-quite a job to get the epoxy and transformer out from the case, but I succeeded with it.
+I got an old military aviation light "semi-accidentally". It had been used as a runway light for temporary 
+airports made eg. on highways. It had a 12V halogen lamp driven by a ring core transformer that was casted 
+in epoxy and fed by some weird 400V two-phase AC connector. Of course I couldn't use it as it was. It was 
+quite a job to get the epoxy and transformer out from the case, but I succeeded with it. Sweaty job, but 
+worth of it.
 
 ![The light unassebled](img/20210320_230801.jpg)
 
@@ -44,6 +45,8 @@ Use the filesystem uploader tool to upload the contents of data library. It cont
 the configuring portal. Then upload the code and you're ready to go.
 
 ## The portal
+
+The portal is a quite basic HTML+CSS+Javascript jumble.
 
 All settings like mode of behavior can be controlled via WiFi. Just connect to WiFi AP __THE LUX__ and
 take your browser to `http://192.168.4.1`
