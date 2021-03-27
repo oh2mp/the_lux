@@ -5,7 +5,7 @@ three 2N2222 transistors for driving the strip. Each color takes about 300 mA an
 much more.
 ![img/20210327_155641.jpg](img/20210327_155641.jpg)
 
-Test run. That blue LCD on the background is for another project that will be published later.
+Test run. That blue LCD and Raspberry Pi 3 on the background are for another project that will be published later.
 ![img/20210327_165049.jpg](img/20210327_165049.jpg)
 
 Another test run
