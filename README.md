@@ -16,6 +16,9 @@ quite a job to get the epoxy and transformer out from the case, but I succeeded 
 
 ![The light unassebled](img/20210320_230801.jpg)
 
+I got an idea that I should modify it so that I could use it eg. on Earth Hour, Venetian Festival or just
+for fun eg. in the dark late summer nights.
+
 I had several meters of 12V RGB strip, so I decided to make a helix of it around a plastic tube and 
 put it in the light and make an ESP2866 driver for it. The strip was consuming about 10W/m of power when
 driven as all colors in full intensity. I had to use transistors because the ESP8266 would not be able
