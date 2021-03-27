@@ -21,7 +21,7 @@ as default after boot.
 
 ![ui/20210327_170042.jpg](ui/20210327_170042.jpg)
 
-Constantly changing color configuration. The step is how long the same color stays before changing RGB values
+Changing color configuration. The step is how long the same color stays before changing RGB values
 by one. See the code.
 
 ![ui/20210327_170050.jpg](ui/20210327_170050.jpg)
@@ -36,7 +36,7 @@ used is the same that is set from the constant color setting.
 ![ui/20210327_170114.jpg](ui/20210327_170114.jpg)
 
 Morse mode. You can set the message, speed and color mode. Also here the constant color is taken from its own
-setting. That page calculates an estimate how long the message is in seconds.
+setting. There you can also see an estimate how long the message is in seconds.
 
 ![ui/20210327_170125.jpg](ui/20210327_170125.jpg)
 
