@@ -13,13 +13,18 @@ Another test run
 
 Building
 ![img/20210327_185708.jpg](img/20210327_185708.jpg)
+
 ![img/20210327_194454.jpg](img/20210327_194454.jpg)
+
 ![img/20210327_194457.jpg](img/20210327_194457.jpg)
+
 ![img/20210327_194706.jpg](img/20210327_194706.jpg)
 
 It illuminates!
 ![img/20210327_200221.jpg](img/20210327_200221.jpg)
+
 ![img/20210327_200227.jpg](img/20210327_200227.jpg)
+
 ![img/20210327_200258.jpg](img/20210327_200258.jpg)
 
 On my front yard during the Earth Hour 2021
