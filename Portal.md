@@ -1,8 +1,10 @@
 # The Portal
 
-The UI is hopefully well optimized for mobile browsers. I am not really a web developer, so...
+The UI is hopefully well optimized for mobile browsers. I am not a web developer but a Unix administrtor, so...
 
-Connect to WiFi "THE LUX" and and take your browser to `http://192.168.4.1`
+Connect to WiFi **THE LUX** and and take your browser to `http://192.168.4.1`
+
+-----------------
 
 The "front page". Here you can choose running mode after boot, go configuring modes and save current settings
 that will stay after next boot. The WiFi settings are an exception. They are saved separately from its page.
