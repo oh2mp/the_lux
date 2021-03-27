@@ -1,0 +1,13 @@
+lux.conf saved to SPIFFS contains rows as:
+---------------------------------------------------------
+working mode: 0 = changing color, 1 constant color, 3 = blinker, 4 = morse
+global brightness (percent)
+changing color (step ms)
+constant color R (0-255)
+constant color G (0-255)
+constant color B (0-255)
+blinker off (ms)
+blinker on (ms)
+morse message (str)
+morse speed (cpm)
+morse mode: 0 = use changing color, 1 = use constant color

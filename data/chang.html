@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="style.css">
+<script src="settings.js" type="text/javascript"></script>
+</head>
+<body>
+<br />
+<form>
+<table>
+<tr><td><b>Changing color</b><hr></td></tr>
+
+<tr><td><div id="colorball" class="colorball"> </div><br />
+        <span id="speed" style="font-size: 24px;">step 10 ms</span><br /><br /></td></tr>
+<tr><td><input class="slider" style="background: lightgrey" type="range" id="s" name="s" min="10" max="100" value="10" oninput="spd();" onchange="setspd();"></td></tr>
+</table>
+<br /><br />
+
+<table><tr><td><a class="fakebutton" href="conf.html">Go back</a></td></tr></table>
+
+</form>
+</body>
+<script type="text/javascript">
+var r;
+var g;
+var b;
+
+http = new XMLHttpRequest();
+http.open("GET","/setmode?m=0");
+http.send();
+runmode = 0;
+
+if (typeof red_now === 'undefined' || red_now === null) {
+    r = 255, g = 0, b = 0;
+} else {
+    r = red_now; g = green_now; b = blue_now;
+}
+
+
+if (typeof colorspeed === 'undefined' || colorspeed === null) colorspeed = 20;
+s = colorspeed;
+document.getElementById("s").value = colorspeed;
+
+function toHex(d) {
+    return  ("0"+(Number(d).toString(16))).slice(-2).toUpperCase()
+}
+
+function spd() {
+    s = document.getElementById("s").value;
+    clearInterval(interval);
+    interval = setInterval(changecolor,s);
+}
+
+function setspd() {
+    s = document.getElementById("s").value;
+    document.location.href="/setspd?s="+s;
+}
+
+function changecolor() {
+    if (r > 0 && b == 0) {
+        r--;
+        g++;
+    }
+    if (g > 0 && r == 0) {
+        g--;
+        b++;
+    }
+    if (b > 0 && g == 0) {
+        r++;
+        b--;
+    }
+
+    curr_rgb = "#"+toHex(r)+toHex(g)+toHex(b);
+    document.getElementById("colorball").style.background = curr_rgb;
+    document.getElementById("speed").innerHTML = "Step "+s+" ms";
+}
+
+interval = setInterval(changecolor,s);
+
+</script>
+</html>
+

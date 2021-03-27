@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="style.css">
+<script src="settings.js" type="text/javascript"></script>
+</head>
+<body>
+<br />
+<form>
+<table>
+<tr><td><b>Set constant color</b><hr></td></tr>
+
+<tr><td><div id="colorball" class="colorball"> </div><br />
+        <span id="rgbh" style="font-size: 24px;">#FFFFFF</span><br />
+        <span id="rgbd" style="font-size: 24px;">0,0,0</span><br />
+        <br /></td></tr>
+<tr><td><input class="slider" style="background: red" type="range" id="r" name="r" min="0" max="255" oninput="rgb();"></td></tr>
+<tr><td><input class="slider" style="background: green" type="range" id="g" name="g" min="0" max="255" oninput="rgb();"></td></tr>
+<tr><td><input class="slider" style="background: blue" type="range" id="b" name="b" min="0" max="255" oninput="rgb();"></td></tr>
+</table>
+<br /><br />
+
+<table><tr><td><a class="fakebutton" href="conf.html">Go back</a></td></tr></table>
+
+</form>
+</body>
+<script type="text/javascript">
+var curr_rgb;
+var last_rgb;
+var r, g, b;
+
+document.getElementById("r").value = const_r;
+document.getElementById("g").value = const_g;
+document.getElementById("b").value = const_b;
+
+http = new XMLHttpRequest();
+http.open("GET","/setmode?m=1");
+http.send();
+runmode = 1;
+
+function toHex(d) {
+    return  ("0"+(Number(d).toString(16))).slice(-2).toUpperCase()
+}
+
+function rgb() {
+    r = document.getElementById("r").value;
+    g = document.getElementById("g").value;
+    b = document.getElementById("b").value;
+
+    curr_rgb = "#"+toHex(r)+toHex(g)+toHex(b);
+    document.getElementById("rgbh").innerHTML = curr_rgb;
+    document.getElementById("rgbd").innerHTML = r+","+g+","+b;
+    document.getElementById("colorball").style.background = curr_rgb;
+}
+
+setInterval(function() {
+    if (curr_rgb != last_rgb) {
+        last_rgb = curr_rgb;
+        http.open("GET","setcolor?r="+r+"&g="+g+"&b="+b,true);
+        http.send();
+    }
+}, 500);
+rgb();
+
+window.addEventListener("load",function() {
+    setTimeout(function(){
+        window.scrollTo(0, 1);
+    }, 0);
+});
+
+</script>
+</html>
+

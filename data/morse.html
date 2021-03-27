@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="style.css">
+<script src="settings.js" type="text/javascript"></script>
+</head>
+<body>
+<br />
+<form autocomplete="off" action="/savemorse" method="POST">
+<table>
+<tr><td><b>Message in morse</b><hr></td></tr>
+<tr><td><input type="text" id="msg" name="msg" maxlength="127" oninput="mspd()">
+<tr><td><span id="speed">speed 60 cpm</span><br /></td></tr>
+<tr><td><input class="slider" style="background: lightgrey" type="range" id="s" name="s" min="25" max="150" value="60" step="5" oninput="mspd();"></td></tr>
+<tr><td><span id="dur">Duration 0 seconds</span><br /></td></tr>
+<table>
+<br />
+<table>
+<tr><td class="radiol" style="padding-left: 40px;"><input type="radio" name="mm" value="0" id="mm0"></td><td class="radiol">Use changing color</td></tr>
+<tr><td class="radiol" style="padding-left: 40px;"><input type="radio" name="mm" value="1" id="mm1"></td><td class="radiol">Use constant color</td></tr>
+</table>
+<br /><br />
+
+<table>
+<tr><td class="even"><input type="submit" value="Set"></td>
+<td><a class="fakebutton" href="conf.html">Go back</a></td></tr>
+</table>
+
+</form>
+</body>
+<script type="text/javascript">
+
+document.getElementById("msg").value = morsemsg;
+document.getElementById("s").value = morsespd;
+
+http = new XMLHttpRequest();
+http.open("GET","/setmode?m=4");
+http.send();
+
+var mpack = " .....-----....-.-.--..--..-...--.-";
+var plain = ".,:?-/=@!0123456789abcdefghijklmnopqrstuvwxyz\xe4\xf6\xe5";
+var mcode = [0xce, 0xd3, 0xc8, 0xd5, 0xca, 0xb8, 0xae, 0xcc, 0xcc, 0xa6, 0xa5, 0xa4, 0xa3, 0xa2, 0xa1, 0xaa,
+                      0xa9, 0xa8, 0xa7, 0x45, 0x8a, 0x8f, 0x6a, 0x21, 0x8d, 0x69, 0x81, 0x41, 0x85, 0x6f, 0x9a, 0x46,
+                      0x4a, 0x66, 0x92, 0x9f, 0x6e, 0x61, 0x26, 0x64, 0x83, 0x65, 0x94, 0x91, 0x89, 0x8e, 0x88, 0xbe];
+
+function morselen() {
+    morsebin = "";
+    morsemsg = document.getElementById("msg").value;
+
+    morsemsg = morsemsg.toLowerCase();
+    // UTF-8 ÄÖÅ? Handle as ISO8859-1. An ugly kludge but works for them.
+    morsemsg = morsemsg.replace("ä","\xe4");
+    morsemsg = morsemsg.replace("ä","\xf6");
+    morsemsg = morsemsg.replace("å","\xe5");
+
+    for (i = 0; i < morsemsg.length; i++) {
+        if (morsemsg.substr(i,1) == " ") {
+            morsebin += "000000";
+        } else {
+            posit = mcode[plain.indexOf(morsemsg.substr(i,1))];
+            // If valid character, do the conversion
+            if (posit >= 0) {
+                startpos = posit & 0x1f;
+                chrsize = (posit >> 0x05) & 0x07;
+
+                for (x = 0; x < chrsize; x++) {
+                    c = mpack.substr(startpos + x, 1);
+                    if (c == '.') morsebin += "10";
+                    if (c == '-') morsebin += "1110";
+                }
+            }
+            /* Letter space is 3 time units by morse code specification, but with light
+             *  instead of sound it is much easier to read if the space is a bit longer.
+             */
+            morsebin += "0000";
+        }
+    }
+    return morsebin.length;
+}
+
+function mspd() {
+    s = document.getElementById("s").value;
+    morsespd = s;
+    document.getElementById("speed").innerHTML = "speed "+s+" cpm";
+    document.getElementById("dur").innerHTML = "Duration "+ Math.round(morselen()*(6/s)) +" seconds";
+}
+mspd();
+document.getElementById("mm"+morsemode).checked = true;
+
+</script>
+</html>
+
