@@ -4,6 +4,7 @@
 #include <FS.h>
 #include <Ticker.h>
 
+// These pins are good for real world schematic if using ESP12E module
 #define RPIN 12
 #define GPIN 14
 #define BPIN 13
@@ -11,11 +12,12 @@
 Ticker morseblinker;
 Ticker colorchanger;
 Ticker colorblinker;
-ESP8266WebServer server(80); // Listen http
-IPAddress apIP(192, 168, 4, 1); // The IP address of the AP
+
+ESP8266WebServer server(80);      // Listen http
+IPAddress apIP(192, 168, 4, 1);   // The IP address of the AP
 File file;
 char html[4096]; // Currently big enough
-char css[8192];
+char css[8192];  // For caching the css file to the memory
 char htmldoc[32] = "/index.html";
 
 uint8_t red = 255;
@@ -39,7 +41,7 @@ uint8_t  morsespd = 30;            // characters per minute
 uint8_t  morsemode = 0;            // 0 = use changing color, 1 = use constant color
 char     morsemsg[128] = "rosto";  // They who know, know :-)
 
-// Morse code compacted in C. See javascript implementation from morse.html
+// Morse code compacted in C. See javascript implementation from data/morse.html
 const char mpack[] = " .....-----....-.-.--..--..-...--.-";
 const char plain[] = ".,:?-/=@!0123456789abcdefghijklmnopqrstuvwxyz\xe4\xf6\xe5";
 const char mcode[] = {0xce, 0xd3, 0xc8, 0xd5, 0xca, 0xb8, 0xae, 0xcc, 0xcc, 0xa6, 0xa5, 0xa4, 0xa3, 0xa2, 0xa1, 0xaa,
@@ -47,16 +49,9 @@ const char mcode[] = {0xce, 0xd3, 0xc8, 0xd5, 0xca, 0xb8, 0xae, 0xcc, 0xcc, 0xa6
                       0x4a, 0x66, 0x92, 0x9f, 0x6e, 0x61, 0x26, 0x64, 0x83, 0x65, 0x94, 0x91, 0x89, 0x8e, 0x88, 0xbe
                      };
 
-// Recursive function to return greatest common divisor of a and b
-uint16_t gcd(uint16_t a, uint16_t b) {
-    if (a == 0) return b;
-    if (b == 0) return a;
-    if (a == b) return a;
-    if (a > b)  return gcd(a - b, b);
-    return gcd(a, b - a);
-}
-
+/* ------------------------------------------------------------------------------- */
 // Find first occurrence of char c in string s, -1 if not found
+// Why does stdlin not contain this?
 int strpos(const char *s, char c) {
     int i = 0;
     while (s[i] != 0) {
@@ -66,10 +61,12 @@ int strpos(const char *s, char c) {
     return -1;
 }
 
+/* ------------------------------------------------------------------------------- */
+// This is called by ticker when morse mode is active
 void morse_timer() {
     morseindex++;
     if (morseindex > strlen(morsebin)) {
-        morseindex = 0;
+        morseindex = 0;                   // Back to the beginning
     }
     // If there is "1" then switch on, otherwise switch off. */
     if (morsebin[morseindex] == 0x31) {
@@ -79,6 +76,7 @@ void morse_timer() {
     }
 }
 
+/* ------------------------------------------------------------------------------- */
 // Convert message to a binary string as morse.
 void message2morse() {
     uint8_t startpos, chrsize;
@@ -113,10 +111,12 @@ void message2morse() {
             strcat(morsebin, "0000");
         }
     }
-    strcat(morsebin, "000000"); // Add a "space" to the end
+    strcat(morsebin, "000000"); // Add a "space" to the end, Something like Farnsworth
     morseindex = 0;
 }
 
+/* ------------------------------------------------------------------------------- */
+// Start running a rumode
 void startmode() {
     if (colorchanger.active()) colorchanger.detach();
     if (colorblinker.active()) colorblinker.detach();
@@ -141,6 +141,8 @@ void startmode() {
     }
 }
 
+/*  ------------------------------------------------------------------------------- */
+// This is called by colorchanger ticker, if changing color is used.
 void color_changer() {
     if (red > 0 && blue == 0) {
         red--;
@@ -158,6 +160,8 @@ void color_changer() {
     if (runmode == 0) led_on();
 }
 
+/* ------------------------------------------------------------------------------- */
+// This is called by blinker ticker, if blinker mode is used
 void blinker(uint8_t onoff) {
     if (onoff == 0) {
         led_off();
@@ -171,7 +175,8 @@ void blinker(uint8_t onoff) {
         });
     }
 }
-
+/* ------------------------------------------------------------------------------- */
+// Set leds on/off according to the values on global RGB values dimmed by brightness value.
 void led_on() {
     analogWrite(RPIN, int((brightness / 100.0)*red));
     analogWrite(GPIN, int((brightness / 100.0)*green));
@@ -183,6 +188,8 @@ void led_off() {
     analogWrite(BPIN, 0);
 }
 
+/* ------------------------------------------------------------------------------- */
+// Quite self explanatory, isn't this?
 void load_settings() {
     // Sigh. I wish C had native hashmaps like eg. Perl or Python
     if (SPIFFS.exists("/conf.txt")) {
@@ -206,6 +213,8 @@ void load_settings() {
     }
 }
 
+/* ------------------------------------------------------------------------------- */
+// Startup
 void setup() {
     pinMode(RPIN, OUTPUT);
     pinMode(GPIN, OUTPUT);
@@ -217,7 +226,7 @@ void setup() {
     SPIFFS.begin();
     load_settings();
     message2morse();
-    
+
     file = SPIFFS.open("/style.css", "r");
     file.readBytes(css, sizeof(css));       // Cache css to RAM.
     file.close();
@@ -229,6 +238,8 @@ void setup() {
         file.close();
     }
 
+    // If the password is less than 8 characters, start in open mode (without password)
+    // 8 chars is the hardware minimum.
     WiFi.mode(WIFI_AP);
     WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
     if (strlen(pass) > 7) {
@@ -271,11 +282,13 @@ void setup() {
     startmode();
 }
 
+/* ------------------------------------------------------------------------------- */
+// The mainloop. We have only one task, to handle web service.
 void loop() {
     server.handleClient();
 }
 
-/* The web server */
+/* The web server functions are here*/
 /* ------------------------------------------------------------------------------- */
 // Serve any file if it exists on SPIFFS. Otherwise refresh to front page.
 // If filename ends with "html" give content-type html, otherwise plaintext.
@@ -297,6 +310,7 @@ void http_serve() {
 }
 
 /* ------------------------------------------------------------------------------- */
+// Serve settings.js
 void http_settingsjs() {
     memset(html, 0, sizeof(html));
     sprintf(html, "var runmode = %d;\nvar brightness = %d;\nvar colorspeed = %d;\n"
@@ -313,6 +327,7 @@ void http_settingsjs() {
     server.send(200, "application/javascript", html);
 }
 /* ------------------------------------------------------------------------------- */
+// Serve wifi.js
 void http_wifijs() {
     memset(html, 0, sizeof(html));
     sprintf(html, "var ssid = \"%s\";\nvar pass = \"%s\";\n",ssid, pass);
@@ -322,6 +337,10 @@ void http_wifijs() {
     server.send(200, "application/javascript", html);
 }
 /* ------------------------------------------------------------------------------- */
+// Blah. Next functions are so self explanatory that I'm too lazy to explain them
+//  one by one. Anybody who didn't begin programming yesterday or last week should
+//  understand them without further explanation. RTFS, you know.
+
 void http_setcolor() {
     red = server.arg("r").toInt();
     green = server.arg("g").toInt();
