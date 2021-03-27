@@ -31,7 +31,7 @@ power that feeds the LED strip too.
 All settings like mode of behavior can be controlled via WiFi. Just connect to WiFi AP "THE LUX" and
 take your browser to `http://192.168.4.1`
 
-See [Portal.md](Portal.md) for more screenshots.
+See [Portal.md](Portal.md) for more screenshots and explanations of the modes.
 
 ![Portal frontpage](ui/20210327_170023.jpg)
 
