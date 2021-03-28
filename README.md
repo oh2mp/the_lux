@@ -57,5 +57,9 @@ See [Portal.md](Portal.md) for more screenshots and explanations of the modes.
 
 See also [THE_LUX.md](THE_LUX.md) for more photos of building my light and it in action.
 
+Here's a video
+
+[![Video](http://img.youtube.com/vi/vY8FH_ll1ME/0.jpg)](http://www.youtube.com/watch?v=vY8FH_ll1ME "Video")
+
 _Have fun!_
 
