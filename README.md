@@ -59,7 +59,7 @@ See also [THE_LUX.md](THE_LUX.md) for more photos of building my light and it in
 
 Here's a video
 
-[![Video](http://img.youtube.com/vi/vY8FH_ll1ME/0.jpg)](http://www.youtube.com/watch?v=vY8FH_ll1ME "Video")
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vY8FH_ll1ME" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 _Have fun!_
 
