@@ -6,3 +6,5 @@ Flash Size: 4M (3M Spiffs)
 Reset Method: ck
 Flash Frequency: 40MHz
 Upload Speed: 115200
+Programmer: USBasp
+
